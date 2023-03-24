@@ -18,8 +18,15 @@ export class UsersController {
     return user;
 }
 @Get('/userid')
-  getUserByUserId(@Param('userid') userid:string): string {
-    return `User of id =${userid}`;    
+   async getUserByUserId(@Param('userid') userid:string): Promise<UserEntity> {
+    //return `User of id =${userid}`; 
+    const user = await this.userService.getUserByUserId(userid);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return user;   
 }
 @Delete('/userid')
 deleteUser(@Param('userid') userid:string): string{

@@ -11,4 +11,7 @@ constructor(@InjectRepository(UserEntity) private userRepo: UsersRepository) {}
  async getUserByUsername(username: string): Promise<UserEntity> {
     return  await this.userRepo.findOne({ where: { username } });
   }
+  public async getUserByUserId(userId: string): Promise<UserEntity> {
+  return await this.userRepo.findOne({ where: { id: userId } });
+}
 }

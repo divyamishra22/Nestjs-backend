@@ -1,5 +1,6 @@
+import { PasswordEntity } from "src/auth/password.entity";
 import { MooBaseEntity } from "src/commons/base.entity";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('Users')            //our users table will have these columns.
@@ -18,4 +19,10 @@ export class UserEntity extends MooBaseEntity {
 
   @Column('varchar',{length:240})
   bio: string;
+  
+  @OneToOne((type) => PasswordEntity, (password) => password.user, {
+    lazy: true,
+    cascade: true,
+  })
+  userPassword: PasswordEntity;
 }

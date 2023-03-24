@@ -45,8 +45,10 @@ deleteUser(@Param('userid') userid:string): string{
 @Post('/username')
 //CreateUser(@Param('username') username: string):string{
    // return `User of ${username} created`;
-    createNewUser(@Body() createUserRequest: UserCreateRequestBody,): string{         //createuserrequest
-             return `User created`;                                                 //shows input reqtype.
+async createNewUser(@Body() createUserRequest: UserCreateRequestBody,): Promise<UserEntity>{         //createuserrequest
+             //return `User created`;  
+     const user = await this.userService.createUser(createUserRequest);
+              return user;                                                      //shows input reqtype.
    }
 
 @Patch('/username')

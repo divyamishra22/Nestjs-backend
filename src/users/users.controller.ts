@@ -51,9 +51,9 @@ deleteUser(@Param('userid') userid:string): string{
 @Post('/username')
 //CreateUser(@Param('username') username: string):string{
    // return `User of ${username} created`;
-async createNewUser(@Body() createUserRequest: UserCreateRequestBody,): Promise<UserEntity>{         //createuserrequest
+async createNewUser(@Body() createUserRequest: UserCreateRequestBody, password: string): Promise<UserEntity>{         //createuserrequest
              //return `User created`;  
-     const user = await this.userService.createUser(createUserRequest);
+     const user = await this.userService.createUser(createUserRequest,password);
               return user;                                                      //shows input reqtype.
    }
 

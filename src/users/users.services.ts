@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { PasswordEntity } from "src/auth/password.entity";
 import { UsersRepository } from "./user.repository"
 import { UserEntity } from "./users.entity"
 
@@ -14,8 +15,11 @@ constructor(@InjectRepository(UserEntity) private userRepo: UsersRepository) {}
   public async getUserByUserId(userId: string): Promise<UserEntity> {
   return await this.userRepo.findOne({ where: { id: userId } });
 }
-public async createUser(user: Partial<UserEntity>): Promise<UserEntity> {
-  return await this.userRepo.create(user);
+
+public async createUser(user: Partial<UserEntity>,password: string): Promise<UserEntity> {
+  user.userPassword = new PasswordEntity();
+   user.userPassword.password = password;
+  return await this.userRepo.save(user);
 }
 
 public async updateUser(

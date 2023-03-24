@@ -7,15 +7,15 @@ export class UserEntity extends MooBaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('string',{length:30})
-  username:string;
+  @Column('varchar',{length:30})
+  username: string;
  
-  @Column('string',{length:50})
+  @Column('varchar',{length:50})
   name: string;
 
-  @Column('string')
+  @Column('varchar')
   avatar: string;
 
-  @Column('string',{length:240})
+  @Column('varchar',{length:240})
   bio: string;
 }

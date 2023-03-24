@@ -1,26 +1,27 @@
 import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-
+import { ApiTags } from '@nestjs/swagger/dist';
+@ApiTags('Users')
 @Controller('users')
 export class UsersController {
 @Get('/username')
-getUserByUserName(@Param() param): string{
-    return `User of Name = ${param.username}`;          //backticks when taking values through @Param.
+getUserByUserName(@Param('username') username:string): string{
+    return `User of Name = ${username}`;          //backticks when taking values through @Param.
 }
 @Get('/userid')
-getUserByUserId(@Param() param): string {
-    return `User of id =${param.userid}`;    
+getUserByUserId(@Param('userid') userid:string): string {
+    return `User of id =${userid}`;    
 }
 @Delete('/userid')
-deleteUser(@Param() param): string{
-   return `Delete User of id = ${param.userid}`;
+deleteUser(@Param('userid') userid:string): string{
+   return `Delete User of id = ${userid}`;
 }
-@Post('/username/userid')
-CreateUser(@Param() param): string{
-    return `User of ${param.username}, ${param.userid} created`;
+@Post('/username')
+CreateUser(@Param('username') username: string):string{
+    return `User of ${username} created`;
 }
-@Patch('/username/userid')
-UpdateUser(@Param() param): string{
-    return `${param.Username} details updated`;
+@Patch('/username')
+UpdateUser(@Param('username') username:string): string{
+    return `${username} details updated`;
 }
 
 

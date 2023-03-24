@@ -12,6 +12,12 @@ class UserCreateRequestBody {
     @ApiPropertyOptional() avatar?: string;
     @ApiPropertyOptional() bio?: string;
   }
+  class UserUpdateRequestBody {
+    @ApiPropertyOptional() password?: string;
+    @ApiPropertyOptional() name?: string;
+    @ApiPropertyOptional() avatar?: string;
+    @ApiPropertyOptional() bio?: string;
+  }
 
 
 @ApiTags('Users')
@@ -51,9 +57,12 @@ async createNewUser(@Body() createUserRequest: UserCreateRequestBody,): Promise<
               return user;                                                      //shows input reqtype.
    }
 
-@Patch('/username')
-UpdateUser(@Param('username') username:string): string{
-    return `${username} details updated`;
+@Patch('/userid')
+ async UpdateUser(@Param('userid') userid: string, @Body() updateuserrequest:UserUpdateRequestBody):
+ Promise<UserEntity>{
+    const user = await this.userService.updateUser(userid,updateuserrequest);
+    return user;
+    //return `${username} details updated`;
 }
 
 

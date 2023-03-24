@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity('Users')            //our users table will have these columns.
-export class User extends MooBaseEntity {
+export class UserEntity extends MooBaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

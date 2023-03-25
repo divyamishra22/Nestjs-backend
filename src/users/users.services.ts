@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { PasswordEntity } from "src/auth/password.entity";
+//import { getConnection } from "typeorm";
 import { UsersRepository } from "./user.repository"
 import { UserEntity } from "./users.entity"
 
@@ -10,10 +11,28 @@ export class UsersService {
 constructor(@InjectRepository(UserEntity) private userRepo: UsersRepository) {}
 
  async getUserByUsername(username: string): Promise<UserEntity> {
-    return  await this.userRepo.findOne({ where: { username } });
+    //return  await this.userRepo.findOne({ where: { username } });
+   const user = await this.userRepo
+    .createQueryBuilder("user")
+    .where("user.username = :username", { username: username})
+    .getOne()
+    if(user){
+    return user;}
+    else{
+      return null;
+    }
   }
-  public async getUserByUserId(userId: string): Promise<UserEntity> {
-  return await this.userRepo.findOne({ where: { id: userId } });
+  public async getUserByUserId(id: string): Promise<UserEntity> {
+  //return await this.userRepo.findOne({ where: { id: userId } });
+  const user = await this.userRepo
+    .createQueryBuilder("user")
+    .where("user.id = :id", { id: id})
+    .getOne()
+    if(user){
+    return user;}
+    else{
+      return null;
+    }
 }
 
 public async createUser(user: Partial<UserEntity>,password: string): Promise<UserEntity> {

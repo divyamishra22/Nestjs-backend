@@ -5,13 +5,13 @@ import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 
 @Entity('passwords')
 export class PasswordEntity extends MooBaseEntity {
- @Column()
- userId: string;
+ //@Column()
+ //userId: string;
 
   @JoinColumn({ name: 'userId' })
-  @OneToOne(() => UserEntity)
+  @OneToOne((type) => UserEntity)
   user: UserEntity;
 
   @Column({ nullable: false })
-  password: string;
+  password:string;
 }

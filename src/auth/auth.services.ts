@@ -12,8 +12,8 @@ export class AuthService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepo: UsersRepository,
-    //@InjectRepository(PasswordEntity)
-    //private passwordRepo: Repository<PasswordEntity>,
+    @InjectRepository(PasswordEntity)
+    private passwordRepo: Repository<PasswordEntity>,
     @InjectRepository(SessionsEntity)
    private sessionRepo: Repository<SessionsEntity>,
   ) {}
@@ -37,5 +37,24 @@ export class AuthService {
     const savedSession = await this.sessionRepo.save(session);
     return savedSession;
   } 
+  async createPasswordForNewUser(
+    username: string,
+    password: string,
+  ): Promise<PasswordEntity> {
+    const existing = await this.userRepo
+    .createQueryBuilder('user')
+    .where('username= :username',{username: username})
+    .getOne()
+    if (existing) {
+      throw new UnauthorizedException(
+        'This user already has a password, cannot set new password',
+      );
+    }
+
+    const newPassword = new PasswordEntity();
+    newPassword.password = password;
+    //newPassword.password = await this.passToHash(password);
+    return await this.passwordRepo.save(newPassword);
+  }
   
 }

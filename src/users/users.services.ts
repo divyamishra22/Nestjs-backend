@@ -42,18 +42,21 @@ public async createUser(user: Partial<UserEntity>,password: string): Promise<Use
 }
 
 public async updateUser(
-    userId: string,
+    id: string,
     newUserDetails: Partial<UserEntity>,
   ): Promise<UserEntity> {
-    const existingUser = await this.userRepo.findOne({
-      where: { id: userId },
-    });
-    if (!existingUser) {
+   //const existingUser = await this.userRepo.findOne({
+     // where: { id: userId }, });
+      const existingUser =  await this.userRepo.createQueryBuilder("user")
+     .where("id = :id", { id: id})
+     .getOne()
+     if (!existingUser) {
       return null;
     }
     if (newUserDetails.bio) existingUser.bio = newUserDetails.bio;
     if (newUserDetails.avatar) existingUser.avatar = newUserDetails.avatar;
     if (newUserDetails.name) existingUser.name = newUserDetails.name;
+    if (newUserDetails.userPassword) existingUser.userPassword = newUserDetails.userPassword;
 
     return await this.userRepo.save(existingUser);
   }

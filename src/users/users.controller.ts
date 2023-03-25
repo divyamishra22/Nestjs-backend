@@ -61,10 +61,10 @@ async createNewUser(@Body() createUserRequest: UserCreateRequestBody, password: 
               return user;                                                      //shows input reqtype.
    }
 
-@Patch('/userid')
- async UpdateUser(@Param('userid') userid: string, @Body() updateuserrequest:UserUpdateRequestBody):
+@Patch('/id')
+ async UpdateUser(@Param('id') id: string, @Body() updateuserrequest:UserUpdateRequestBody):
  Promise<UserEntity>{
-    const user = await this.userService.updateUser(userid,updateuserrequest);
+    const user = await this.userService.updateUser(id,updateuserrequest);
     return user;
     //return `${username} details updated`;
 }

@@ -1,5 +1,5 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post } from '@nestjs/common';
-import { ApiProperty, ApiPropertyOptional, ApiTags } from '@nestjs/swagger/dist';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiProperty, ApiPropertyOptional, ApiTags } from '@nestjs/swagger/dist';
 import { UserEntity } from './users.entity';
 import { UsersService } from './users.services';
 
@@ -33,10 +33,10 @@ export class UsersController {
     }
     return user;
 }
-@Get('/id')
-   async getUserByUserId(@Param('userid') userid:string): Promise<UserEntity> {
+@Get('/userId')
+   async getUserByUserId(@Param('userId') userId:string): Promise<UserEntity> {
     //return `User of id =${userid}`; 
-    const user = await this.userService.getUserByUserId(userid);
+    const user = await this.userService.getUserByUserId(userId);
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -55,16 +55,19 @@ export class UsersController {
 @Post('/username')
 //CreateUser(@Param('username') username: string):string{
    // return `User of ${username} created`;
-async createNewUser(@Body() createUserRequest: UserCreateRequestBody, password: string): Promise<UserEntity>{         //createuserrequest
-             //return `User created`;  
-     const user = await this.userService.createUser(createUserRequest,password);
-              return user;                                                      //shows input reqtype.
+async createNewUser(@Body() createUserRequest: UserCreateRequestBody, password: string): Promise<UserEntity>{         
+  const user = await this.userService.createUser(createUserRequest,password);
+  return user;                                                     
    }
 
-@Patch('/id')
- async UpdateUser(@Param('id') id: string, @Body() updateuserrequest:UserUpdateRequestBody):
+
+
+@Patch('/userId')
+ async UpdateUser(
+  @Param('userId') userId: string, 
+ @Body() updateuserrequest:UserUpdateRequestBody):
  Promise<UserEntity>{
-    const user = await this.userService.updateUser(id,updateuserrequest);
+    const user = await this.userService.updateUser(userId,updateuserrequest);
     return user;
     //return `${username} details updated`;
 }

@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { PasswordEntity } from './auth/password.entity';
+import { SessionsEntity } from './auth/sessions.entity';
 import { UsersModule } from './users/user.module';
 import { UserEntity } from './users/users.entity';
 //import { UsersController } from './users/users.controller';
@@ -17,8 +18,8 @@ import { UserEntity } from './users/users.entity';
       port: 5432,
       username: 'postgres',
       password: 'divya123',
-      database: 'moodb',
-      entities: [UserEntity,PasswordEntity],
+      database: 'mydb',
+      entities: [UserEntity,PasswordEntity,SessionsEntity],
       synchronize: true,
       logger:'advanced-console',
       logging: 'all',  

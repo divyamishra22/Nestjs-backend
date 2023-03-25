@@ -24,34 +24,33 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('Username does not exist');
     }
-    const passMatch = await this.userRepo
-    .createQueryBuilder("userPassword")
-    .where("userPassword = userPassword", {userPassword: password})
+    const userPassword = await this.passwordRepo
+    .createQueryBuilder("Password")
+    .where("Password = Password", {password: password})
     .getOne()
     //const passMatch = await this.matchPassHash(password, userPassword.password);
-    if (!passMatch) {
+    if (!userPassword) {
       throw new UnauthorizedException('Password is wrong');
     }
     const session = new SessionsEntity();
-    session.userId = username;
+    session.userId = userPassword.userId;
     const savedSession = await this.sessionRepo.save(session);
     return savedSession;
   } 
   async createPasswordForNewUser(
-    username: string,
+    userId: string,
     password: string,
   ): Promise<PasswordEntity> {
-    const existing = await this.userRepo
-    .createQueryBuilder('user')
-    .where('username= :username',{username: username})
+    const existing = await this.passwordRepo
+    .createQueryBuilder('password')
+    .where('password= :password',{password:password})
     .getOne()
-    if (existing) {
+    if (!existing) {
       throw new UnauthorizedException(
-        'This user already has a password, cannot set new password',
-      );
+        'This user already has a password, cannot set new password');
     }
-
     const newPassword = new PasswordEntity();
+    newPassword.userId = userId;
     newPassword.password = password;
     //newPassword.password = await this.passToHash(password);
     return await this.passwordRepo.save(newPassword);

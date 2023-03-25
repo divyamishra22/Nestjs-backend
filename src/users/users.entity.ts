@@ -5,8 +5,8 @@ import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('Users')            //our users table will have these columns.
 export class UserEntity extends MooBaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  //@PrimaryGeneratedColumn('uuid')
+  //id: string;
 
   @Column('varchar',{length:30})
   username: string;
@@ -24,5 +24,6 @@ export class UserEntity extends MooBaseEntity {
     lazy: true,
     cascade: true,
   })
-  userPassword: PasswordEntity;
-}
+  userPassword: PasswordEntity;       //here,User entity can connect through password entity by 
+                                       //using userPassword as it is mapped ,userPassword.(passwordentity).
+}                                            

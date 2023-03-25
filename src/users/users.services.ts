@@ -1,5 +1,6 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
+import { AuthService } from "src/auth/auth.services";
 import { PasswordEntity } from "src/auth/password.entity";
 //import { getConnection } from "typeorm";
 import { UsersRepository } from "./user.repository"
@@ -11,45 +12,33 @@ export class UsersService {
 constructor(@InjectRepository(UserEntity) private userRepo: UsersRepository) {}
 
  async getUserByUsername(username: string): Promise<UserEntity> {
-    //return  await this.userRepo.findOne({ where: { username } });
-   const user = await this.userRepo
-    .createQueryBuilder("user")
-    .where("user.username = :username", { username: username})
-    .getOne()
-    if(user){
-    return user;}
-    else{
-      return null;
+      return await this.userRepo.findOne({ where: { username } });
     }
-  }
-  public async getUserByUserId(id: string): Promise<UserEntity> {
-  //return await this.userRepo.findOne({ where: { id: userId } });
-  const user = await this.userRepo
-    .createQueryBuilder("user")
-    .where("user.id = :id", { id: id})
-    .getOne()
-    if(user){
-    return user;}
-    else{
-      return null;
-    }
+  
+  public async getUserByUserId(userId: string): Promise<UserEntity> {
+  return await this.userRepo.findOne({ where: { id: userId } });
 }
 
 public async createUser(user: Partial<UserEntity>,password: string): Promise<UserEntity> {
-  user.userPassword = new PasswordEntity();
-   user.userPassword.password = password;
-  return await this.userRepo.save(user);
+  //user.userPassword = new PasswordEntity();
+  // user.userPassword.password = password;
+  //return await this.userRepo.save(user);
+const usernameAlreadyExists = await this.getUserByUsername(user.username);
+if (usernameAlreadyExists)
+  throw new ConflictException('This username is already taken!');
+
+const newUser = await this.userRepo.save(user);
+
+//await this.authService.createPasswordForNewUser(newUser.id, password);
+return newUser;
 }
 
 public async updateUser(
-    id: string,
+    userId: string,
     newUserDetails: Partial<UserEntity>,
   ): Promise<UserEntity> {
-   //const existingUser = await this.userRepo.findOne({
-     // where: { id: userId }, });
-      const existingUser =  await this.userRepo.createQueryBuilder("user")
-     .where("id = :id", { id: id})
-     .getOne()
+   const existingUser = await this.userRepo.findOne({
+     where: { id: userId }, });
      if (!existingUser) {
       return null;
     }

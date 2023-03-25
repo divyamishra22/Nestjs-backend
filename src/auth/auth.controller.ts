@@ -4,11 +4,12 @@ import { AuthService } from "./auth.services";
 
 class LoginRequestBody {
     @ApiProperty() username: string;
+    //@ApiProperty() userId: string;
     @ApiProperty() password: string;
   }
   
   class LoginResponseBody {
-    @ApiProperty() token: Promise<any>;
+    @ApiProperty() token: string;
     constructor(token: any) {
       this.token = token;
     }
@@ -27,4 +28,10 @@ async login(@Body() body: LoginRequestBody) {
   return new  LoginResponseBody(newsession);
 }
  
+@Post('/signup')
+async signup(@Body() body:LoginRequestBody) {
+  const newuser = await this.authService.createPasswordForNewUser(body.username,
+    body.password)
+    return new LoginResponseBody(newuser);
+}
 }

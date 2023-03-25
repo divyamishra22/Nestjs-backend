@@ -34,7 +34,7 @@ export class UsersController {
     return user;
 }
 @Get('/id')
-   async getUserByUserId(@Param('id') userid:string): Promise<UserEntity> {
+   async getUserByUserId(@Param('userid') userid:string): Promise<UserEntity> {
     //return `User of id =${userid}`; 
     const user = await this.userService.getUserByUserId(userid);
     if (!user) {
@@ -42,9 +42,15 @@ export class UsersController {
     }
     return user;   
 }
-@Delete('/userid')
-deleteUser(@Param('userid') userid:string): string{
-   return `Delete User of id = ${userid}`;
+@Delete('/username')
+ async deleteUser(@Param('username') username:string): Promise<any>{
+   //return `Delete User of id = ${userid}`;
+    const del = await this.userService.deleteUser(username);
+    if(del)
+    return `user deleted`;
+    else{
+      return `invalid request`;
+    }
 }
 @Post('/username')
 //CreateUser(@Param('username') username: string):string{

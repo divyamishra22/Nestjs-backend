@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { PasswordEntity } from "src/auth/password.entity";
 //import { getConnection } from "typeorm";
@@ -56,5 +56,16 @@ public async updateUser(
     if (newUserDetails.name) existingUser.name = newUserDetails.name;
 
     return await this.userRepo.save(existingUser);
+  }
+
+  public async deleteUser(username:string): Promise<any>{
+     if(this.getUserByUsername(username)!== null){
+       await this.userRepo
+       .createQueryBuilder()
+       .delete()
+       .where("username = :username", { username: username}) }
+    else{
+      throw new NotFoundException('User not found');
+    }
   }
 }

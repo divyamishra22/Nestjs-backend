@@ -8,8 +8,8 @@ class LoginRequestBody {
   }
   
   class LoginResponseBody {
-    @ApiProperty() token: string;
-    constructor(token: string) {
+    @ApiProperty() token: Promise<any>;
+    constructor(token: any) {
       this.token = token;
     }
   }
@@ -22,7 +22,9 @@ constructor(private authService: AuthService) {}
 @ApiResponse({ type: LoginResponseBody })
 @Post('/login')
 async login(@Body() body: LoginRequestBody) {
-  return 'verified user';
+  const newsession = await this.authService.createNewSession( body.username,
+  body.password,)
+  return new  LoginResponseBody(newsession);
 }
  
 }

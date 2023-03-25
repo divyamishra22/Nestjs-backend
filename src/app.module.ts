@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import { PasswordEntity } from './auth/password.entity';
 import { UsersModule } from './users/user.module';
 import { UserEntity } from './users/users.entity';
@@ -23,6 +24,7 @@ import { UserEntity } from './users/users.entity';
       logging: 'all',  
     }),
     UsersModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

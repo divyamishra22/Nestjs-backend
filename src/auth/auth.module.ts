@@ -4,6 +4,7 @@ import { UserEntity } from "src/users/users.entity";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.services";
 import { PasswordEntity } from "./password.entity";
+import { SessionsEntity } from "./sessions.entity";
 
 
 @Global()
@@ -11,7 +12,7 @@ import { PasswordEntity } from "./password.entity";
   imports: [
     TypeOrmModule.forFeature([
       PasswordEntity,
-      //SessionsEntity,
+      SessionsEntity,
       UserEntity,
       PasswordEntity,
     ]),

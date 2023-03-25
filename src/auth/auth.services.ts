@@ -4,6 +4,7 @@ import { UsersRepository } from "src/users/user.repository";
 import { UserEntity } from "src/users/users.entity";
 import { Repository } from "typeorm";
 import { PasswordEntity } from "./password.entity";
+import { SessionsEntity } from "./sessions.entity";
 
 @Injectable()
 export class AuthService {
@@ -12,8 +13,8 @@ export class AuthService {
     private userRepo: UsersRepository,
     @InjectRepository(PasswordEntity)
     private passwordRepo: Repository<PasswordEntity>,
-    //@InjectRepository(SessionsEntity)
-   // private sessionRepo: Repository<SessionsEntity>,
+    @InjectRepository(SessionsEntity)
+   private sessionRepo: Repository<SessionsEntity>,
   ) {}
   
   

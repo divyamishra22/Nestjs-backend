@@ -8,16 +8,16 @@ export class UserEntity extends MooBaseEntity {
   //@PrimaryGeneratedColumn('uuid')
   //id: string;
 
-  @Column('varchar',{length:30})
+  @Column('varchar',{length:30,nullable: false})
   username: string;
  
-  @Column('varchar',{length:50})
+  @Column('varchar',{length:50,nullable:true})
   name: string;
 
-  @Column('varchar')
+  @Column('varchar',{ nullable: true })
   avatar: string;
 
-  @Column('varchar',{length:240})
+  @Column('varchar',{length:240, nullable:true})
   bio: string;
   
   @OneToOne((type) => PasswordEntity, (password) => password.user, {

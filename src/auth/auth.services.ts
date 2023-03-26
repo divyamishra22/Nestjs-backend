@@ -24,10 +24,9 @@ export class AuthService {
     if (!user) {
       throw new NotFoundException('Username does not exist');
     }
-    const userPassword = await this.passwordRepo
-    .createQueryBuilder("Password")
-    .where("Password = Password", {password: password})
-    .getOne()
+    const userPassword = await this.passwordRepo.findOne({
+      where: { userId: user.id },
+    });
     //const passMatch = await this.matchPassHash(password, userPassword.password);
     if (!userPassword) {
       throw new UnauthorizedException('Password is wrong');
@@ -42,10 +41,8 @@ export class AuthService {
     password: string,
   ): Promise<PasswordEntity> {
     const existing = await this.passwordRepo
-    .createQueryBuilder('password')
-    .where('password= :password',{password:password})
-    .getOne()
-    if (!existing) {
+    .findOne({where: { userId }})
+    if (existing) {
       throw new UnauthorizedException(
         'This user already has a password, cannot set new password');
     }

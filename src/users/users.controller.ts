@@ -52,11 +52,11 @@ export class UsersController {
       return `invalid request`;
     }
 }
-@Post('/username')
+@Post('/')
 //CreateUser(@Param('username') username: string):string{
    // return `User of ${username} created`;
-async createNewUser(@Body() createUserRequest: UserCreateRequestBody, password: string): Promise<UserEntity>{         
-  const user = await this.userService.createUser(createUserRequest,password);
+async createNewUser(@Body() createUserRequest: UserCreateRequestBody): Promise<UserEntity>{         
+  const user = await this.userService.createUser(createUserRequest, createUserRequest.password);
   return user;                                                     
    }
 

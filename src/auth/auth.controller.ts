@@ -4,7 +4,6 @@ import { AuthService } from "./auth.services";
 
 class LoginRequestBody {
     @ApiProperty() username: string;
-    //@ApiProperty() userId: string;
     @ApiProperty() password: string;
   }
   
@@ -24,14 +23,9 @@ constructor(private authService: AuthService) {}
 @Post('/login')
 async login(@Body() body: LoginRequestBody) {
   const newsession = await this.authService.createNewSession( body.username,
-  body.password,)
+  body.password)
   return new  LoginResponseBody(newsession);
 }
  
-@Post('/signup')
-async signup(@Body() body:LoginRequestBody) {
-  const newuser = await this.authService.createPasswordForNewUser(body.username,
-    body.password)
-    return new LoginResponseBody(newuser);
-}
+
 }

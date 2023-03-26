@@ -25,7 +25,7 @@ class UserCreateRequestBody {
 export class UsersController {
  constructor(private userService: UsersService) {}
 @Get('/username')
- async getUserByUserName(@Param('username') username:string): Promise<any>{
+ async getUserByUserName(@Param('username') username:string): Promise<UserEntity>{
     //return `User of Name = ${username}`;     //backticks when taking values through @Param.
     const user = await this.userService.getUserByUsername(username);
     if (!user) {
@@ -42,16 +42,7 @@ export class UsersController {
     }
     return user;   
 }
-@Delete('/username')
- async deleteUser(@Param('username') username:string): Promise<any>{
-   //return `Delete User of id = ${userid}`;
-    const del = await this.userService.deleteUser(username);
-    if(del)
-    return `user deleted`;
-    else{
-      return `invalid request`;
-    }
-}
+
 @Post('/')
 //CreateUser(@Param('username') username: string):string{
    // return `User of ${username} created`;

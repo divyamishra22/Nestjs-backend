@@ -11,7 +11,7 @@ import { UserEntity } from "./users.entity"
 @Injectable()
 export class UsersService {
 constructor(@InjectRepository(UserEntity) private userRepo: UsersRepository,
-@InjectRepository(PasswordEntity) private passRepo: PasswordRepository,
+//@InjectRepository(PasswordEntity) private passRepo: PasswordRepository,
 private authService: AuthService,) {}
 
  async getUserByUsername(username: string): Promise<UserEntity> {
@@ -19,9 +19,9 @@ private authService: AuthService,) {}
     }
   
   public async getUserByUserId(userId: string): Promise<UserEntity> {
-  //return await this.userRepo.findOne({ where: { id: userId } });
-     const userid = await this.passRepo.findOne({where: {userId}});
-    return await this.userRepo.findOne({where: {id : userid.id}});
+  return await this.userRepo.findOne({ where: { id: userId } });
+     //const userid = await this.passRepo.findOne({where: {userId}});
+    //return await this.userRepo.findOne({where: {userid.user}});
 }
 
 public async createUser(user: Partial<UserEntity>,password: string): Promise<UserEntity> {
@@ -44,7 +44,7 @@ public async updateUser(
     newUserDetails: Partial<UserEntity>,
   ): Promise<UserEntity> {
    const existingUser = await this.userRepo.findOne({
-     where: { id: userId }, });
+     where: { id: userId}, });
      if (!existingUser) {
       return null;
     }
@@ -56,14 +56,5 @@ public async updateUser(
     return await this.userRepo.save(existingUser);
   }
 
-  public async deleteUser(username:string): Promise<any>{
-     if(this.getUserByUsername(username)!== null){
-       await this.userRepo
-       .createQueryBuilder()
-       .delete()
-       .where("username = :username", { username: username}) }
-    else{
-      throw new NotFoundException('User not found');
-    }
-  }
+  
 }

@@ -24,16 +24,16 @@ class UserCreateRequestBody {
 @Controller('users')
 export class UsersController {
  constructor(private userService: UsersService) {}
-@Get('/username')
- async getUserByUserName(@Param('username') username:string): Promise<UserEntity>{
-    //return `User of Name = ${username}`;     //backticks when taking values through @Param.
+@Get('/@:username')
+ async getUserByUserName(@Param('username') username:string): Promise<any>{
+    //return `User of Name = ${username}`;    
     const user = await this.userService.getUserByUsername(username);
     if (!user) {
       throw new NotFoundException('User not found');
     }
     return user;
 }
-@Get('/userId')
+@Get('/:userId')
    async getUserByUserId(@Param('userId') userId:string): Promise<UserEntity> {
     //return `User of id =${userid}`; 
     const user = await this.userService.getUserByUserId(userId);
@@ -53,7 +53,7 @@ async createNewUser(@Body() createUserRequest: UserCreateRequestBody): Promise<U
 
 
 
-@Patch('/userId')
+@Patch('/:userId')
  async UpdateUser(
   @Param('userId') userId: string, 
  @Body() updateuserrequest:UserUpdateRequestBody):

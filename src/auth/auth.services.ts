@@ -65,5 +65,16 @@ export class AuthService {
   // ): Promise<boolean> {
   //   return (await compare(password, hash)) === true;
   // }
+  async getUserFromSessionToken(token: string): Promise<UserEntity> {
+    const session = await this.sessionRepo.findOne({ where: { id: token } });
+    if (!session) {
+      throw new UnauthorizedException('Session not found');
+    }
+    const user = await session.user;
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+    return user;
+  }
   
 }

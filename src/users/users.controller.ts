@@ -62,6 +62,17 @@ async createNewUser(@Body() createUserRequest: UserCreateRequestBody): Promise<U
     return user;
     //return `${username} details updated`;
 }
+// @Delete('/:username')
+// removeById(@Param('username') id: string) {
+//   return this.userService.remove(+id);
+// }
+@Delete('/:Id')
+  async deletePost(@Param('Id') Id: string) {
+    const deletedPost = {
+      id: Id,
+      deleted: await this.userService.delete(Id),
+    };
 
-
+    return deletedPost;
+  }
 }

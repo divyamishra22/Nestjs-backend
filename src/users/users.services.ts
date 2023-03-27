@@ -8,6 +8,7 @@ import { UsersRepository } from "./user.repository"
 import { UserEntity } from "./users.entity"
 
 
+
 @Injectable()
 export class UsersService {
 constructor(@InjectRepository(UserEntity) private userRepo: UsersRepository,
@@ -54,6 +55,10 @@ public async updateUser(
     if (newUserDetails.userPassword) existingUser.userPassword = newUserDetails.userPassword;
 
     return await this.userRepo.save(existingUser);
+  }
+  async delete(id: string): Promise<boolean> {
+    const deleteResult = await this.userRepo.delete({ id });
+    return deleteResult.affected === 1;
   }
 
   

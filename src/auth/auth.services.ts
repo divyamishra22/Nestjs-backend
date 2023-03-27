@@ -27,14 +27,18 @@ export class AuthService {
     const userPassword = await this.passwordRepo.findOne({
       where: { userId: user.id },
     });
-    const passMatch = await this.matchPassHash(password, userPassword.password);
-    if (!passMatch) {
-      throw new UnauthorizedException('Password is wrong');
-    }
+    // const passMatch = await this.matchPassHash(password, userPassword.password);
+    // if (!passMatch) {
+    //   throw new UnauthorizedException('Password is wrong');
+    // }
+    if(password == userPassword.password){
     const session = new SessionsEntity();
     session.userId = userPassword.userId;
     const savedSession = await this.sessionRepo.save(session);
-    return savedSession;
+    return savedSession;}
+    else{
+      throw new UnauthorizedException('Password is wrong');
+    }
   }
 
 
@@ -55,11 +59,11 @@ export class AuthService {
     return await this.passwordRepo.save(newPassword);
   }
 
-  private async matchPassHash(
-    password: string,
-    hash: string,
-  ): Promise<boolean> {
-    return (await compare(password, hash)) === true;
-  }
+  // private async matchPassHash(
+  //   password: string,
+  //   hash: string,
+  // ): Promise<boolean> {
+  //   return (await compare(password, hash)) === true;
+  // }
   
 }

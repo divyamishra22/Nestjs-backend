@@ -1,5 +1,6 @@
 import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiProperty, ApiPropertyOptional, ApiTags } from '@nestjs/swagger/dist';
+import { RequiredAuthGuard } from 'src/auth/auth.guard';
 import { UserEntity } from './users.entity';
 import { UsersService } from './users.services';
 
@@ -66,6 +67,7 @@ async createNewUser(@Body() createUserRequest: UserCreateRequestBody): Promise<U
 // removeById(@Param('username') id: string) {
 //   return this.userService.remove(+id);
 // }
+@UseGuards(RequiredAuthGuard)
 @Delete('/:Id')
   async deletePost(@Param('Id') Id: string) {
     const deletedPost = {

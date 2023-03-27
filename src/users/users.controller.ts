@@ -19,6 +19,11 @@ class UserCreateRequestBody {
     @ApiPropertyOptional() avatar?: string;
     @ApiPropertyOptional() bio?: string;
   }
+  class DeleteRequestBody {
+    @ApiProperty() Id: string;
+    @ApiProperty() token: string;
+   
+  }
 
 
 @ApiTags('Users')
@@ -67,12 +72,13 @@ async createNewUser(@Body() createUserRequest: UserCreateRequestBody): Promise<U
 // removeById(@Param('username') id: string) {
 //   return this.userService.remove(+id);
 // }
+@ApiBearerAuth()
 @UseGuards(RequiredAuthGuard)
 @Delete('/:Id')
-  async deletePost(@Param('Id') Id: string) {
+  async deletePost(@Body() deleteRequestBody:DeleteRequestBody) {           //get token for verfication from user
     const deletedPost = {
-      id: Id,
-      deleted: await this.userService.delete(Id),
+      id: deleteRequestBody.Id,
+      deleted: await this.userService.delete(deleteRequestBody.Id,deleteRequestBody.token),
     };
 
     return deletedPost;

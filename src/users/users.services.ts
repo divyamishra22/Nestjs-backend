@@ -56,9 +56,12 @@ public async updateUser(
 
     return await this.userRepo.save(existingUser);
   }
-  async delete(id: string): Promise<boolean> {
+  async delete(id: string , token: string): Promise<boolean> {
+    const user = await this.authService.getUserFromSessionToken(token);
+    if(user){
     const deleteResult = await this.userRepo.delete({ id });
     return deleteResult.affected === 1;
+    }
   }
 
   

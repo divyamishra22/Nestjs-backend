@@ -1,4 +1,4 @@
-import { ExecutionContext, Inject, UnauthorizedException } from "@nestjs/common";
+import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from "@nestjs/common";
 import { AuthService } from "./auth.services";
 
 class TokenAuthorizer {
@@ -20,3 +20,10 @@ class TokenAuthorizer {
       return true;
     }
   }
+  
+  @Injectable()
+export class RequiredAuthGuard extends TokenAuthorizer implements CanActivate {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
+    return this.authorizeToken(context);
+  }
+}

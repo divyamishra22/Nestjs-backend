@@ -15,6 +15,7 @@ async function bootstrap() {
       },
     }
   );
+  app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('Moo API')
     .setDescription('API for checking user status')

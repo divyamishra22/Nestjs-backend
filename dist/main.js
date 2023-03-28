@@ -12,6 +12,7 @@ async function bootstrap() {
             ],
         },
     });
+    app.enableCors();
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Moo API')
         .setDescription('API for checking user status')

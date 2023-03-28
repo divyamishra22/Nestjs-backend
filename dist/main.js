@@ -5,7 +5,13 @@ const platform_fastify_1 = require("@nestjs/platform-fastify");
 const swagger_1 = require("@nestjs/swagger");
 const app_module_1 = require("./app.module");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_fastify_1.FastifyAdapter());
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, new platform_fastify_1.FastifyAdapter(), {
+        cors: {
+            origin: [
+                'http://ec2-13-51-249-139.eu-north-1.compute.amazonaws.com/'
+            ],
+        },
+    });
     const config = new swagger_1.DocumentBuilder()
         .setTitle('Moo API')
         .setDescription('API for checking user status')

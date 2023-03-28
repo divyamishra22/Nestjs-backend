@@ -6,7 +6,14 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter()
+    new FastifyAdapter(), {
+      cors: {
+        origin: [
+          'http://ec2-13-51-249-139.eu-north-1.compute.amazonaws.com/'
+         
+        ],
+      },
+    }
   );
   const config = new DocumentBuilder()
     .setTitle('Moo API')

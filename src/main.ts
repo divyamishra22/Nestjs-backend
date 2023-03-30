@@ -16,7 +16,16 @@ async function bootstrap() {
   //     },
   //   }
   // );
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, 
+    {
+          cors: {
+            origin: [
+              'http://ec2-13-51-249-139.eu-north-1.compute.amazonaws.com/'
+             
+            ],
+          },
+        } 
+    );
   // app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('Moo API')

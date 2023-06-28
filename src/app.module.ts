@@ -7,25 +7,27 @@ import { PasswordEntity } from './auth/password.entity';
 import { SessionsEntity } from './auth/sessions.entity';
 import { UsersModule } from './users/user.module';
 import { UserEntity } from './users/users.entity';
+import { prodmodule } from './db.module';
 //import { UsersController } from './users/users.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: '127.0.0.1',
-      //
-      port: 5432,
-      username: 'postgres',
-      password: 'divya123',
-      database: 'mydb',
-      entities: [UserEntity,PasswordEntity,SessionsEntity],
-      synchronize: true,
-      logger:'advanced-console',
-      logging: 'all',  
-    }),
+    // TypeOrmModule.forRoot({
+    //   type: 'postgres',
+    //   // host: '127.0.0.1',
+    //   //
+    //   port: 5432,
+    //   username: 'postgres',
+    //   password: 'divya123',
+    //   database: 'mydb',
+    //   entities: [UserEntity,PasswordEntity,SessionsEntity],
+    //   synchronize: true,
+    //   logger:'advanced-console',
+    //   logging: 'all',  
+    // }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    prodmodule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,25 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.prodmodule = void 0;
 const common_1 = require("@nestjs/common");
-const app_controller_1 = require("./app.controller");
-const app_service_1 = require("./app.service");
-const auth_module_1 = require("./auth/auth.module");
-const user_module_1 = require("./users/user.module");
-const db_module_1 = require("./db.module");
-let AppModule = class AppModule {
+const typeorm_1 = require("@nestjs/typeorm");
+let prodmodule = class prodmodule {
 };
-AppModule = __decorate([
+prodmodule = __decorate([
+    (0, common_1.Global)(),
     (0, common_1.Module)({
         imports: [
-            user_module_1.UsersModule,
-            auth_module_1.AuthModule,
-            db_module_1.prodmodule
+            typeorm_1.TypeOrmModule.forRoot({
+                type: 'postgres',
+                url: 'postgresql://postgres:divya123@127.0.0.1:5432/mydb',
+            }),
         ],
-        controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
     })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+], prodmodule);
+exports.prodmodule = prodmodule;
+//# sourceMappingURL=db.module.js.map

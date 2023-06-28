@@ -12,22 +12,22 @@ import { prodmodule } from './db.module';
 
 @Module({
   imports: [
-    // TypeOrmModule.forRoot({
-    //   type: 'postgres',
-    //   // host: '127.0.0.1',
-    //   //
-    //   port: 5432,
-    //   username: 'postgres',
-    //   password: 'divya123',
-    //   database: 'mydb',
-    //   entities: [UserEntity,PasswordEntity,SessionsEntity],
-    //   synchronize: true,
-    //   logger:'advanced-console',
-    //   logging: 'all',  
-    // }),
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: '10000',
+      //
+      port: 5432,
+      username: 'postgres',
+      password: 'divya123',
+      database: 'mydb',
+      entities: [UserEntity,PasswordEntity,SessionsEntity],
+      synchronize: true,
+      logger:'advanced-console',
+      logging: 'all',  
+    }),
     UsersModule,
     AuthModule,
-    prodmodule
+    // prodmodule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,6 +1,10 @@
 {
   "name": "twitfinal",
   "version": "0.0.1",
+
+    "engines": {"node": "x.x.x"},
+
+
   "description": "",
   "author": "",
   "private": true,

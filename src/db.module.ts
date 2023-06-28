@@ -8,7 +8,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
     imports: [
       TypeOrmModule.forRoot({
         type: 'postgres',
-        url:  'postgres://postgres:divya123@127.0.0.1:5432/mydb',
+        url:  'postgresql://postgres:divya123@127.0.0.1:5432/mydb',
       }),
    
     ],

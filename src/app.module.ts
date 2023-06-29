@@ -9,7 +9,7 @@ import { UsersModule } from './users/user.module';
 import { UserEntity } from './users/users.entity';
 // import { prodmodule } from './db.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-//import { UsersController } from './users/users.controller';
+
 
 @Module({
   imports: [
@@ -18,35 +18,20 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       type: 'postgres',
       host: process.env.HOST,
       //
-      port: 5432,
-      username: 'postgres',
-      password: 'divya123',
-      database: 'mydb',
+      //  port: 5432,
+       port: parseInt(process.env.PORT),
+      // username: 'postgres',
+      // password: 'divya123',
+      // database: 'mydb',
+      username: process.env.USERNAME,
+      password: process.env.PASSWORD,
+      database: process.env.DATABASE,
       entities: [UserEntity,PasswordEntity,SessionsEntity],
       synchronize: true,
-      logger:'advanced-console',
-      logging: 'all',  
+      // logger:'advanced-console',
+      // logging: 'all',  
     }),
       
-    // TypeOrmModule.forRootAsync({
-    //   imports: [ConfigModule.forRoot({
-    //      isGlobal:true,
-    //      envFilePath: "local.env"
-    //   })],
-    //   useFactory: (configService: ConfigService) => ({
-    //     type: 'postgres',
-    //      host: configService.get('HOST'),
-    //     port: +configService.get('PORT'),
-    //     username: configService.get('USERNAME'),
-    //     password: configService.get('PASSWORD'),
-    //     database: configService.get('DATABASE'),
-    //     // entities: [UserEntity,PasswordEntity,SessionsEntity],
-    //     synchronize: true,
-    //   //    logger:'advanced-console',
-    //   // logging: 'all',  
-    //   }),
-    //   inject: [ConfigService],
-    // }),
     UsersModule,
     AuthModule,
     // prodmodule
